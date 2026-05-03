@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Fuerza : MonoBehaviour
 {
@@ -11,8 +12,13 @@ public class Fuerza : MonoBehaviour
     public float masa;
     
     public float radio;
+    public bool salto;
+    public bool moving;
+    public Transform planeta;
 
-    public Transform planeta;   
+    public float speed;
+
+    private Vector2 move;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,7 +32,45 @@ public class Fuerza : MonoBehaviour
     {
         Vector3 gravity = (Vector3.down * g * rb.mass * masa) / (radio * radio);
         rb.AddForce( gravity);
-        Debug.Log(gravity.magnitude);
-        rb.AddForce(Vector3.up * parametro);
+        
+        if (moving)
+        {
+            Debug.Log(gravity.magnitude);
+            rb.AddForce(Vector3.up * parametro);
+        }
+
+        if (moving)
+        {
+            rb.linearVelocity = new Vector3(move.x, 0, move.y) * speed ;
+        }
+    }
+    
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            salto = true;
+            Debug.Log("Salto");
+        }
+        else if (context.canceled)
+        {
+            salto = false;
+            Debug.Log("No salto");
+        }
+    }
+
+     public void OnMove(InputAction.CallbackContext context)
+    {
+        move = context.ReadValue<Vector2>();
+        if (context.started || context.performed)
+        {
+            moving = true;
+            Debug.Log("Movimiento");
+        }
+        else if (context.canceled)
+        {
+            moving = false;
+            Debug.Log("No movimiento");
+        }
     }
 }

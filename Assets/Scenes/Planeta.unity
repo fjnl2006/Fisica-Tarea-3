@@ -479,7 +479,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1020910279
 CapsuleCollider:
@@ -589,14 +589,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227aef9e8ea7849498f79d72bf78dd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fuerza
-  parametro: 5000
-  g: 0.00006673
-  masa: 150
-  radio: 300
+  parametro: 50
+  g: 0.00673
+  masa: 300
+  radio: 0
   salto: 0
   moving: 0
   planeta: {fileID: 1059058409}
-  speed: 0
+  speed: 2
 --- !u!114 &1020910284
 MonoBehaviour:
   m_ObjectHideFlags: 0

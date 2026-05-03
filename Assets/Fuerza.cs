@@ -23,17 +23,22 @@ public class Fuerza : MonoBehaviour
     void Start()
     {
         rb =  GetComponent<Rigidbody>();
-         radio = Mathf.Sqrt((transform.position.x - planeta.position.x) * (transform.position.x - planeta.position.x) + (transform.position.y - planeta.position.y) * (transform.position.y - planeta.position.y) + (transform.position.z - planeta.position.z) * (transform.position.z - planeta.position.z) );
-         Debug.Log(radio);
+        rb.useGravity = false;
+        
+         
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 gravity = (Vector3.down * g * rb.mass * masa) / (radio * radio);
+        radio = Mathf.Sqrt((transform.position.x - planeta.position.x) * (transform.position.x - planeta.position.x) + (transform.position.y - planeta.position.y) * (transform.position.y - planeta.position.y) + (transform.position.z - planeta.position.z) * (transform.position.z - planeta.position.z) );
+//        Debug.Log(radio);
+        Vector3 direccionAlPlaneta = (planeta.position - transform.position).normalized;
+        Vector3 gravity = (direccionAlPlaneta * (g * rb.mass * masa)) / (radio * radio);
         rb.AddForce( gravity);
+        Debug.Log(gravity);
         
-        if (moving)
+        if (salto)
         {
             Debug.Log(gravity.magnitude);
             rb.AddForce(Vector3.up * parametro);
@@ -41,7 +46,7 @@ public class Fuerza : MonoBehaviour
 
         if (moving)
         {
-            rb.linearVelocity = new Vector3(move.x, 0, move.y) * speed ;
+            rb.AddForce(new Vector3(move.x, 0, move.y) * speed,ForceMode.VelocityChange);        
         }
     }
     
